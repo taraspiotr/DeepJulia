@@ -1,0 +1,4 @@
+name = "DeepJulia"
+uuid = "138a2711-f80b-4403-ace9-ffd51037499e"
+authors = ["Piotr Tarasiewicz <taras.piotr@gmail.com>"]
+version = "0.1.0"
