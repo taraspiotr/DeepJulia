@@ -1,6 +1,6 @@
 mutable struct Variable
-    values::ArrayOrCuArray
-    grad::ArrayOrCuArray
+    values::Tensor
+    grad::Tensor
     
     Variable(values) = new(values, to(zeros(size(values)), device(values)))
     Variable(values, grad) = new(values, grad)

@@ -1,13 +1,8 @@
 using CUDA: CuArray
 
-@enum Device begin
-    cpu
-    gpu
-end
+Tensor = Union{Array,CuArray}
 
-ArrayOrCuArray = Union{Array,CuArray}
-
-function to(A::ArrayOrCuArray, device::Device)
+function to(A::Tensor, device::Device)
     if device == cpu
         return Array(A)
     elseif device == gpu
@@ -17,4 +12,4 @@ function to(A::ArrayOrCuArray, device::Device)
     end
 end
 
-device(A::ArrayOrCuArray) = isa(A, CuArray) ? gpu : cpu
+device(A::Tensor) = isa(A, CuArray) ? gpu : cpu
