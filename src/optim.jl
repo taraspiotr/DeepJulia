@@ -7,7 +7,7 @@ struct SGD <: Optimizer
     params::Vector{Variable}
     lr::Real
     momentum::Real
-    velocities::Vector{ArrayOrCuArray}
+    velocities::Vector{Tensor}
     
     SGD(params, lr) = new(params, lr, 0.0, Vector{Matrix{Real}}(undef, size(params, 1)))
     SGD(params, lr, momentum) = new(params, lr, momentum, [to(zeros(size(p.values)), device(p.values)) for p ∈ params])

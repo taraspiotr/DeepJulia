@@ -3,8 +3,12 @@ module DeepJulia
 export Device,
 gpu,
 cpu,
-ArrayOrCuArray,
+
+# tensor
+
+Tensor,
 to,
+device,
 
 # variable
 
@@ -44,7 +48,8 @@ batchify,
 FashionMNIST,
 shuffle!
 
-include("cuda.jl")
+include("device.jl")
+include("tensor.jl")
 include("variable.jl")
 include("loss.jl")
 include("modules.jl")

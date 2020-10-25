@@ -12,9 +12,9 @@ mutable struct LinearLayer <: NNModule
     W::Variable
     b::Variable
     
-    input::ArrayOrCuArray
+    input::Tensor
     
-    LinearLayer(W::ArrayOrCuArray, b::ArrayOrCuArray) = new(
+    LinearLayer(W::Tensor, b::Tensor) = new(
         Variable(W),
         Variable(b),
         Matrix{Real}(undef, 0, 0),
