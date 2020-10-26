@@ -37,7 +37,7 @@ model = ModuleList([
     SigmoidActivation(),
 ])
 
-loss = LogLoss()
+loss = MSE()
 optim = SGD(params(model), lr, momentum)
 
 input = Tensor(rand(batch_size, D); device=DEVICE, requires_grad=false)
