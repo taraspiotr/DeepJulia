@@ -1,7 +1,7 @@
 # DeepJulia
 A very simple DL package in Julia. The API is heavily inspired by the one and only [PyTorch](https://pytorch.org) library.
 
-This package was created as a part of the assignment for the COMP0090 - Introduction to Deep Learning @ UCL.
+This package was created as a part of the assignment for the [COMP0090](https://www.ucl.ac.uk/module-catalogue/modules/introduction-to-deep-learning/COMP0090) - Introduction to Deep Learning @ UCL.
 
 This is my first project in Julia and it is more than certain that there are a lot of design flaws. Nevertheless I hope this package can have some value for those picking up deep learning / Julia.
 
