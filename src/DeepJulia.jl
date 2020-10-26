@@ -3,36 +3,45 @@ module DeepJulia
 export Device,
 gpu,
 cpu,
+to,
 
 # tensor
 
 Tensor,
-to,
-device,
-
-# variable
-
-Variable,
-zerograd!,
+size,
+getindex,
+length,
+adjoint,
+show,
 to!,
+zerograd!,
+backward!,
+sum,
++,
+-,
+*,
+/,
+broadcasted,
+
+# functional
+
+logistic,
+logloss,
 
 # loss
 Loss,
 LogLoss,
-MSE,
 get_loss,
-get_grad,
 
 # modules
 
 NNModule,
 LinearLayer,
-forward!,
-backward!,
-params,
 Activation,
 SigmoidActivation,
 ModuleList,
+forward,
+params,
 
 # optim
 
@@ -50,7 +59,7 @@ shuffle!
 
 include("device.jl")
 include("tensor.jl")
-include("variable.jl")
+include("functional.jl")
 include("loss.jl")
 include("modules.jl")
 include("optim.jl")
