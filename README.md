@@ -5,7 +5,10 @@ Simple DL package in Julia
 ## Installation
 
 ```Julia
-using Pkg; Pkg.add(url="https://github.com/taraspiotr/DeepJulia")
+using Pkg
+
+pkg"add https://github.com/taraspiotr/DeepJulia"
+pkg"precompile"
 
 using DeepJulia
 ```
