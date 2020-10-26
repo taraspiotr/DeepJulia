@@ -7,6 +7,8 @@ This is my first project in Julia and it is more than certain that there are a l
 
 I will be very grateful for every issue / comment / PR.
 
+Piotr
+
 
 ## Installation
 
