@@ -16,7 +16,7 @@ lr = 1e-2
 momentum = 0.9
 num_epochs = 10
 batch_size = 8
-DEVICE = gpu
+DEVICE = cpu
 
 D = size(trainset[1][1], 1)
 
@@ -34,11 +34,11 @@ to!(model, DEVICE)
 to!(optim, DEVICE)
 
 for epoch = 1:num_epochs
+    shuffle!(trainset)
     for stage ∈ ["train", "valid"]
         total_loss = 0
         dataset = stage == "train" ? trainset : validset
-        shuffle!(trainset)
-        batches = batchify(trainset, batch_size)
+        batches = batchify(dataset, batch_size)
         for (i, (x, y)) ∈ enumerate(batches)
             x, y = Tensor(x; device=DEVICE), Tensor(reshape(y, (:, 1)); device=DEVICE)
             
