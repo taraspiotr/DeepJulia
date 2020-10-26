@@ -1,3 +1,5 @@
+import Base: step
+
 abstract type Optimizer end
 
 step(optim::Optimizer) = throw("unimplemented")
