@@ -31,6 +31,7 @@ logloss,
 # loss
 Loss,
 LogLoss,
+MSE,
 get_loss,
 
 # modules
