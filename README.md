@@ -40,8 +40,8 @@ model = ModuleList([
 loss = MSE()
 optim = SGD(params(model), lr, momentum)
 
-input = Tensor(rand(batch_size, D); device=DEVICE, requires_grad=false)
-output = Tensor(rand(batch_size, 1); device=DEVICE, requires_grad=false)
+input = Tensor(rand(batch_size, D); requires_grad=false)
+output = Tensor(rand(batch_size, 1); requires_grad=false)
 
 for i=1:num_epochs
     zerograd!(optim)
