@@ -47,7 +47,7 @@ for i=1:num_epochs
     zerograd!(optim)
     l = get_loss(loss, output, forward(model, input))
     backward!(l)
-    DeepJulia.step(optim)
+    step(optim)
     println("Epoch $(i), loss = $(l.values[1])")
 end
 ```
