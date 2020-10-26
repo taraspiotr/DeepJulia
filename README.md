@@ -61,6 +61,7 @@ Example scripts can be found in the `examples/` directory.
 - [x] NN: NNModule, LinearLayer, Activation, SigmoidActivation, ModuleList
 - [x] Optim: SGD
 - [x] Loss: LogLoss (without the log trick), MSE
+- [ ] Tests!
 - [ ] Autograd: everything else, especially broadcasting
 - [ ] CUDA support
 - [ ] NN: Convolutions, RNN, Transformer, ...
