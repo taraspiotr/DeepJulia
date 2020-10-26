@@ -3,14 +3,20 @@ abstract type Optimizer end
 step(optim::Optimizer) = throw("unimplemented")
 to!(optim::Optimizer, device::Device) = throw("unimplemented")
 
+function zerograd!(optim::Optimizer)
+    for p ∈ optim.params
+        zerograd!(p)
+    end
+end
+
 struct SGD <: Optimizer
-    params::Vector{Variable}
+    params::Vector{Tensor}
     lr::Real
     momentum::Real
-    velocities::Vector{Tensor}
+    velocities::Vector{AbstractArray}
     
     SGD(params, lr) = new(params, lr, 0.0, Vector{Matrix{Real}}(undef, size(params, 1)))
-    SGD(params, lr, momentum) = new(params, lr, momentum, [to(zeros(size(p.values)), device(p.values)) for p ∈ params])
+    SGD(params, lr, momentum) = new(params, lr, momentum, [to(zeros(size(p.values)), p.device) for p ∈ params])
 end
 
 function step(optim::SGD)

@@ -1,4 +1,9 @@
+import Random
+
 using DeepJulia
+
+
+Random.seed!(123)
 
 run(`curl -fsS http://udon.stacken.kth.se/\~ninjin/comp0090_assignment_1_data.tar.gz -o /tmp/data.tar.gz`)
 run(`tar -x -z -f /tmp/data.tar.gz -C /tmp/`)
@@ -11,7 +16,7 @@ lr = 1e-2
 momentum = 0.9
 num_epochs = 10
 batch_size = 8
-DEVICE = gpu
+DEVICE = cpu
 
 D = size(trainset[1][1], 1)
 
@@ -29,24 +34,24 @@ to!(model, DEVICE)
 to!(optim, DEVICE)
 
 for epoch = 1:num_epochs
+    shuffle!(trainset)
     for stage ∈ ["train", "valid"]
         total_loss = 0
         dataset = stage == "train" ? trainset : validset
-        shuffle!(trainset)
-        batches = batchify(trainset, batch_size)
+        batches = batchify(dataset, batch_size)
         for (i, (x, y)) ∈ enumerate(batches)
-            x, y = to(x, DEVICE), to(y, DEVICE)
+            x, y = Tensor(x; device=DEVICE), Tensor(reshape(y, (:, 1)); device=DEVICE)
             
             if stage == "train"
-                zerograd!(model)
+                zerograd!(optim)
             end
             
-            ŷ = forward!(model, x)
+            ŷ = forward(model, x)
             l = get_loss(loss, y, ŷ)
-            total_loss += l
+            total_loss += l.values[1]
             
             if stage == "train"
-                backward!(model, get_grad(loss, y, ŷ))
+                backward!(l)
                 DeepJulia.step(optim)
             end
         end
