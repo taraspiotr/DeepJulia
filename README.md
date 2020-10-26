@@ -1,5 +1,5 @@
 # DeepJulia
-A very simple DL package in Julia. The API is heavily inspired by the one and only [PyTorch](pytorch.org) library.
+A very simple DL package in Julia. The API is heavily inspired by the one and only [PyTorch](https://pytorch.org) library.
 
 This package was created as a part of the assignment for the COMP0090 - Introduction to Deep Learning @ UCL.
 
