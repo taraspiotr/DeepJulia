@@ -6,9 +6,3 @@ struct LogLoss <: Loss
 end
 
 get_loss(l::LogLoss, y, ŷ) = logloss(y, ŷ)
-
-
-struct MSE <: Loss
-end
-
-get_loss(l::LogLoss, y, ŷ) = mse(y, ŷ)

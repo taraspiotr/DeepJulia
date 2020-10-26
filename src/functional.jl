@@ -38,23 +38,3 @@ function logloss(y::Tensor, ŷ::Tensor)
         device=y.device
     )
 end
-
-
-function mse(y::Tensor, ŷ::Tensor)
-    values = [-mean((y.values - ŷ.values).^2 / 2)]
-    if y.requires_grad || ŷ.requires_grad
-        requires_grad = true
-        dependencies = [
-            Dependency(y, x -> x .* (y.values - ŷ.values) / length(y)),
-            Dependency(ŷ, x -> x .* (ŷ.values - y.values) / length(y))
-        ]
-    else
-        requires_grad = false
-        dependencies = nothing
-    end
-    Tensor(
-        values;
-        dependencies=dependencies,
-        device=y.device
-    )
-end
