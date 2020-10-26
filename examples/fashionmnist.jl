@@ -1,4 +1,5 @@
 import Random
+using Statistics
 
 using DeepJulia
 
@@ -23,6 +24,8 @@ D = size(trainset[1][1], 1)
 model = ModuleList([
         LinearLayer(D, D ÷ 2),
         SigmoidActivation(),
+        # LinearLayer(D ÷ 2, D ÷ 2),
+        # SigmoidActivation(),
         LinearLayer(D ÷ 2, 1),
         SigmoidActivation(),
         ])
@@ -37,6 +40,7 @@ for epoch = 1:num_epochs
     shuffle!(trainset)
     for stage ∈ ["train", "valid"]
         total_loss = 0
+        accuracy = 0
         dataset = stage == "train" ? trainset : validset
         batches = batchify(dataset, batch_size)
         for (i, (x, y)) ∈ enumerate(batches)
@@ -49,6 +53,10 @@ for epoch = 1:num_epochs
             ŷ = forward(model, x)
             l = get_loss(loss, y, ŷ)
             total_loss += l.values[1]
+
+            if stage == "valid"
+                accuracy += mean((y.values .> 0.5) .== (ŷ.values .> 0.5))
+            end
             
             if stage == "train"
                 backward!(l)
@@ -56,6 +64,10 @@ for epoch = 1:num_epochs
             end
         end
         println("Epoch: $epoch\t$stage loss: $(total_loss / size(batches, 1))")
+        if stage == "valid"
+            println("Epoch: $epoch\t$stage accuracy: $(accuracy / size(batches, 1))")
+        end
+
     end
     println()
 end
