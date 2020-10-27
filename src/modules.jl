@@ -15,10 +15,13 @@ struct LinearLayer <: NNModule
     W::Tensor
     b::Tensor
     
-    LinearLayer(input_dim::Integer, output_dim::Integer) = new(
-        Tensor(randn(input_dim, output_dim) ./ 100),
-        Tensor(zeros(1, output_dim)),
-    )
+    function LinearLayer(input_dim::Integer, output_dim::Integer)
+        a = sqrt(1 / input_dim)
+        new(
+            Tensor(rand(input_dim, output_dim) * 2a .- a),
+            Tensor(zeros(1, output_dim) * 2a .- a),
+        )
+    end
 end
 
 forward(m::LinearLayer, x) = x * m.W .+ m.b

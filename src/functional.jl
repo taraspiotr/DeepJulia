@@ -41,7 +41,7 @@ end
 
 
 function mse(y::Tensor, ŷ::Tensor)
-    values = [-mean((y.values - ŷ.values).^2 / 2)]
+    values = [mean((y.values - ŷ.values).^2 / 2)]
     if y.requires_grad || ŷ.requires_grad
         requires_grad = true
         dependencies = [
