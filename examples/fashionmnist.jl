@@ -30,6 +30,13 @@ model = ModuleList([
         SigmoidActivation(),
         ])
 
+for m ∈ model.modules
+    if m isa LinearLayer
+        xavier_uniform!(m.W, 4)
+        zero!(m.b)
+    end
+end
+
 loss = LogLoss()
 optim = SGD(params(model), lr, momentum)
 

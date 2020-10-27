@@ -56,7 +56,12 @@ Dataset,
 length,
 batchify,
 FashionMNIST,
-shuffle!
+shuffle!,
+
+# init
+
+xavier_uniform!,
+zero!
 
 include("device.jl")
 include("tensor.jl")
@@ -65,5 +70,6 @@ include("loss.jl")
 include("modules.jl")
 include("optim.jl")
 include("dataset.jl")
+include("init.jl")
 
 end # module
