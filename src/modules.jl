@@ -13,19 +13,21 @@ end
 
 struct LinearLayer <: NNModule
     W::Tensor
-    b::Tensor
+    b::Union{Tensor,Nothing}
+    bias::Bool
     
-    function LinearLayer(input_dim::Integer, output_dim::Integer)
+    function LinearLayer(input_dim::Integer, output_dim::Integer; bias::Bool=true)
         a = sqrt(1 / input_dim)
         new(
             Tensor(rand(input_dim, output_dim) * 2a .- a),
-            Tensor(zeros(1, output_dim) * 2a .- a),
+            bias ? Tensor(rand(1, output_dim) * 2a .- a) : nothing,
+            bias,
         )
     end
 end
 
-forward(m::LinearLayer, x) = x * m.W .+ m.b
-params(m::LinearLayer) = [m.W, m.b]
+forward(m::LinearLayer, x) = m.bias ? x * m.W .+ m.b : x * m.W
+params(m::LinearLayer) = m.bias ? [m.W, m.b] : [m.W]
 
 struct Activation <: NNModule
     activation::Function
