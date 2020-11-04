@@ -1,11 +1,20 @@
 import Base: size, getindex, sum, +, *, -, /, adjoint, show, broadcasted, length
 
-
+"""
+Keeps information about dependency on a `tensor`.
+The derivative of this dependency is kept as `grad_fn`.
+"""
 struct Dependency
     tensor::Any
     grad_fn::Function
 end
 
+"""
+Wrapper on an Array kept as `values`.
+Additionally keeps gradients `grad` and `dependencies`.
+If `requires_grad` is set to false the gradients are not calculated.
+`device` is only a placeholder for now.
+"""
 mutable struct Tensor{T,N}
     values::AbstractArray{T,N}
     grad::Union{AbstractArray,Nothing}
@@ -45,10 +54,22 @@ function to!(t::Tensor, device::Device)
     t.device = device
 end
 
+"""
+    zerograd!(t)
+
+Set all the gradient values of tensor `t` to zero.
+"""
 function zerograd!(t::Tensor)
     fill!(t.grad, 0)
 end
 
+"""
+    backward!(t[, grad])
+
+Run the backpropagation through the tensor `t` and it's dependencies.
+`grad` is an incoming gradient from the tensor dependent on `t`.
+If `grad` is missing it's filled with ones.
+"""
 function backward!(t::Tensor, grad::Union{AbstractArray,Nothing}=nothing)
     @assert t.requires_grad "Called backward! on a Tensor that doesn't require grad"
     grad = isnothing(grad) ? to(ones(size(t.grad)), t.device) : grad
@@ -60,12 +81,20 @@ function backward!(t::Tensor, grad::Union{AbstractArray,Nothing}=nothing)
     end
 end
 
+
+"""
+    sum(t)
+
+Sum all elements of tensor `t`.
+"""
 sum(t::Tensor) = Tensor(
         [sum(t.values)];
         requires_grad=t.requires_grad,
         dependencies=t.requires_grad ? [Dependency(t, x -> x .* to(ones(size(t.grad)), t.device))] : nothing,
         device=t.device
 )
+
+### OVERLOAD STANDARD OPERATORS TO WORK ON TESORS
 
 function +(t1::Tensor, t2::Tensor)
     values = t1.values + t2.values

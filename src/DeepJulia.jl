@@ -6,6 +6,8 @@ cpu,
 to,
 
 # tensor
+# here we implement the autograd
+# and implement basic operations on Tensors
 
 Tensor,
 size,
@@ -24,17 +26,22 @@ sum,
 broadcasted,
 
 # functional
+# here we keep any useful functions
+# with implemented gradients
 
 logistic,
 logloss,
 
 # loss
+# wrapper on losses
+
 Loss,
 LogLoss,
 MSE,
 get_loss,
 
 # modules
+# modules for building Neural Networks
 
 NNModule,
 LinearLayer,
@@ -45,6 +52,7 @@ forward,
 params,
 
 # optim
+# optimizers for NNModules
 
 Optimizer,
 SGD,
@@ -59,6 +67,7 @@ FashionMNIST,
 shuffle!,
 
 # init
+# initialization functions
 
 xavier_uniform!,
 zero!

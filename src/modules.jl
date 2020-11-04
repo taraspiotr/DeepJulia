@@ -2,7 +2,18 @@ using Random
 
 abstract type NNModule end
 
+"""
+    forward(m, x)
+
+Forward `x` through NNModule `m`.
+"""
 forward(m::NNModule, x) = throw("unimplemented")
+
+"""
+    params(m)
+
+Return all parameters of `m`.
+"""
 params(m::NNModule) = throw("unimplemented")
 
 function to!(m::NNModule, device::Device)

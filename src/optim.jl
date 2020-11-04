@@ -1,10 +1,22 @@
 import Base: step
 
+
 abstract type Optimizer end
 
+"""
+    step(optim)
+
+Run a single optimization step.
+"""
 step(optim::Optimizer) = throw("unimplemented")
+
 to!(optim::Optimizer, device::Device) = throw("unimplemented")
 
+"""
+    zerograd!(optim)
+
+Run zerograd! on every parameters optimized by optim.
+"""
 function zerograd!(optim::Optimizer)
     for p ∈ optim.params
         zerograd!(p)

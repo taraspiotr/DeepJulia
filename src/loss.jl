@@ -1,5 +1,10 @@
 abstract type Loss end
 
+"""
+    get_loss(l, y, ŷ)
+
+Return a loss.
+"""
 get_loss(l::Loss, y, ŷ) = throw("unimplemented")
 
 struct LogLoss <: Loss
